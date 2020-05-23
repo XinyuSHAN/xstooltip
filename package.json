@@ -1,0 +1,36 @@
+{
+  "name": "xs-tooltip",
+  "version": "0.1.0",
+  "description": "XS tooltip",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel ./src/index.html --open",
+    "prebuild": "rm -rf dist",
+    "build": "parcel build ./src/index.html --public-url . --no-source-maps"
+  },
+  "repository": "https://github.com/XinyuSHAN/xstooltip",
+  "author": "XS",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@types/styled-components": "^5.1.0",
+    "classnames": "^2.2.6",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "styled-components": "^5.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-react": "^7.8.3",
+    "@types/react": "^16.9.35",
+    "parcel-bundler": "^1.12.4",
+    "postcss-modules": "^1.5.0",
+    "postcss-nested": "^4.2.1",
+    "typescript": "^3.9.3"
+  },
+  "resolutions": {
+    "**/**/kind-of": "^6.0.3",
+    "**/**/acorn": "^6.4.1",
+    "**/**/minimist": "1.2.3"
+  }
+}
