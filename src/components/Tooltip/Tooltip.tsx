@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, ReactNode } from 'react';
-import cx from 'classnames';
-import Styles from './styles.css';
-import { Container, TooltipContent, Arrow } from './common.styled';
+import { Container, TooltipContent, Arrow, TooltipDetail } from './common.styled';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
 export type Direction = 'up' | 'down' | 'left' | 'right';
 export type Color = 'dark' | 'light' ;
@@ -10,10 +10,11 @@ interface Props {
     title: string;
     color?: Color;
     direction?: Direction;
-    children?: ReactNode | string;
+    children: ReactNode | string;
+    detail?: string;
   }
 
-const Tooltip :React.FC<Props> = ({ title, color, direction, children }) => {
+const Tooltip :React.FC<Props> = ({ title, color, direction, detail, children }) => {
     const node: any = useRef();
     const [isVisible, setIsVisible] = useState(false);
     const handleClick = ({ target }) => {
@@ -31,46 +32,33 @@ const Tooltip :React.FC<Props> = ({ title, color, direction, children }) => {
     }, []);
 
     return (
-        <div className={Styles.container}
-            data-testid="tooltip"
-            ref={node}
-            onMouseEnter={() => setIsVisible(!isVisible)}
-        >
-            <div data-testid="tooltip-placeholder">{children}</div>
-            {isVisible && (
-                <div
-                    className={cx(Styles.tooltipContent, 
-                        Styles[direction],
-                        // color==='light'?Styles.tooltipContentLight:null,
-                        )}
-                    data-testid="tooltip-content"
-                >
-                    <span className={Styles.arrow}></span>
-                    {title}
-                </div>
-            )}
-        </div>
-    );
+    <Container
+        data-testid="tooltip"
+        ref={node}
+        onMouseEnter={() => setIsVisible(!isVisible)}
+    >
+        <div data-testid="tooltip-placeholder">{children}</div>
+        {isVisible && (
+            <TooltipContent
+                direction = {direction}
+                color = {color?color:'dark'}
+                data-testid="tooltip-content"
+            >
+                <Arrow 
+                direction = {direction} 
+                color = {color?color:'dark'}>
+                </Arrow>
+                {detail?
+                <>
+                <p><FontAwesomeIcon icon={faQuestionCircle} /><b>{title}</b></p>
+                <TooltipDetail>{detail}</TooltipDetail>
+                </>
+                :title}
+            </TooltipContent>
+        )}
+    </Container>
+);
 };
 
 export default Tooltip;
 
-// return (
-//     <Container
-//         data-testid="tooltip"
-//         ref={node}
-//         onMouseEnter={() => setIsVisible(!isVisible)}
-//     >
-//         <div data-testid="tooltip-placeholder">{children}</div>
-//         {isVisible && (
-//             <TooltipContent
-//                 direction = {direction}
-//                 color = {color?color:'dark'}
-//                 data-testid="tooltip-content"
-//             >
-//                 <Arrow direction = {direction}></Arrow>
-//                 {title}
-//             </TooltipContent>
-//         )}
-//     </Container>
-// );

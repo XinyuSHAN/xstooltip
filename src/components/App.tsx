@@ -2,6 +2,7 @@ import React from 'react';
 import Tooltip from './Tooltip/Tooltip';
 import { Button, Wrapper } from './Tooltip/common.styled';
 
+const detailExample = 'Information is an uncountable noun meaning ‘facts about someone or something’. It is often followed by about: … '
 const App: React.FC = () => {
     return (
         <Wrapper>
@@ -20,6 +21,9 @@ const App: React.FC = () => {
             </Tooltip>
             <Tooltip title="Tooltip Light" direction="up" color='light'>
                 <Button>Light</Button>
+            </Tooltip>
+            <Tooltip title="Tooltip Light" direction="down" color='light' detail = {detailExample}>
+                <Button>Details</Button>
             </Tooltip>
         </Wrapper>
     );

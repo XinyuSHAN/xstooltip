@@ -26,9 +26,20 @@ export const Container = styled.div`
   margin: 0 10px;
   -webkit-tap-highlight-color: transparent;
 `
+export const TooltipDetail = styled.textarea`
+font-family: Arial, Helvetica, sans-serif;
+font-size: 8px;
+height: 40px;
+width: 200px;
+text-align: left;
+border-width:0px; 
+border-radius: 3px;
+padding:5px;
+background: aliceblue;
+`
 
 export const TooltipContent = styled.div<{ direction: string,color:string}>`
-  color: ${props => (props.color==='light' ? 'grey':'#ffffff')};
+  color: ${props => (props.color==='light' ? 'grey':'#efefef')};
   position: absolute;
   z-index: 10;
   padding: 12px;
@@ -36,31 +47,25 @@ export const TooltipContent = styled.div<{ direction: string,color:string}>`
   cursor: default;
   border-radius: 3px;
   white-space: nowrap;
-  font-family: monospace;
-  background-color: ${props => (props.color==='light' ? '#ffffff':'grey')};
+  font-family: Arial, Helvetica, sans-serif;;
+  background-color: ${props => (props.color==='light' ? '#efefef':'grey')};
   box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.16);
   animation: fadeIn ease-in-out 0.65s;
-
-  left: ${props => {
-    if (props.direction==='up'||props.direction==='left' )
-      return '50%'
-    else if (props.direction==='right')
-      return 'calc(100% + 18px)';
-  }};
-  right: ${props => (props.direction==='left' ? 'calc(100% + 18px)':null)};
-  top: ${props => {
-    if (props.direction==='left')
-      return '50%';
-    else if (props.direction==='down')
-      return 'calc(100% + 18px)';
-  }};
-  bottom: ${props => (props.direction==='up' ? 'calc(100% + 18px)':null)};
-  transform: ${props => {
-    if (props.direction==='up'||props.direction==='down' )
-      return 'translateX(-50%)'
-    else if (props.direction==='left')
-      return 'translateY(-50%)';
-  }};
+  ${props => 
+    {
+      if (props.direction==='up')
+        return ` bottom: calc(100% + 18px);
+        left: 50%;
+        transform: translateX(-50%);`;
+      else if (props.direction==='down')
+        return `top: calc(100% + 18px);
+        left: 50%;
+        transform: translateX(-50%);`;
+      else if (props.direction==='left')
+        return `right: calc(100% + 18px);`;
+      else if (props.direction==='right')
+        return `left: calc(100% + 18px);`;
+      }}
 
   &.sm {
       max-width: 23rem;
@@ -71,24 +76,36 @@ export const TooltipContent = styled.div<{ direction: string,color:string}>`
   }
 `
 
-export const Arrow = styled.span<{ direction: string}>`
+export const Arrow = styled.span<{ direction: string,color:string}>`
   position: absolute;
   width: 0;
   height: 0;
-  top: ${props => {
-    if(props.direction==='left')
-      return 'calc(50% - 10px)';
-    else if(props.direction==='down')
-      return '-8px ';}};
-  bottom: ${props => (props.direction==='up' ? '-8px':null)};
-  left: ${props => {
-    if(props.direction==='up'|| props.direction==='down')
-      return 'calc(50% - 10px)';
-    else if(props.direction==='right')
-      return '-8px';}}
-  right: ${props => (props.direction==='left' ? '-8px':null)};
-  border-right: 10px solid transparent;
-  border-top: 10px solid grey;
-  border-left: 10px solid transparent;
-}`
-
+  ${props => 
+    {
+      const color = props.color==='light' ? '#efefef':'grey';
+      if (props.direction==='up')
+        return ` bottom: -8px;
+        left: calc(50% - 10px);
+        border-right: 10px solid transparent;
+        border-top: 10px solid ${color};
+        border-left: 10px solid transparent;`;
+      else if (props.direction==='down')
+        return `top: -8px;
+        left: calc(50% - 10px);
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid ${color};
+        border-left: 10px solid transparent;`;
+      else if (props.direction==='left')
+        return ` top: calc(50% - 10px);
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            right: -8px;
+            border-left: 10px solid ${color};`;
+      else if (props.direction==='right')
+        return `left: -8px;
+                border-right: 10px solid ${color};
+                top: calc(50% - 10px);
+                border-top: 10px solid transparent;
+                border-bottom: 10px solid transparent;`;
+      }}
+`
