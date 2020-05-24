@@ -1,2 +1,5 @@
-# xstooltip
-test zilliz
+Test tooltip
+```
+npm -i
+npm start
+```
